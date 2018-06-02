@@ -26,18 +26,13 @@
 -(void)bind
 {
     @weakify(self)
-
     self.command = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(NSNumber * input) {
-        
         NSLog(@"page-->%@",input);
         RACSignal *signal = [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-            
-            self.param[@"page"] = input;
-            
+            self.param[@"start"] = input;
+            self.param[@"count"] = @(5);
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            
             [manager GET:url parameters:self.param progress:^(NSProgress * _Nonnull downloadProgress) {
-                
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (input.integerValue == 1) {
                     [self.dataSource removeAllObjects];
@@ -54,10 +49,8 @@
                 [manager.session finishTasksAndInvalidate];
                 NSLog(@"%@",error);
             }];
-            
             return nil;
         }];
-        
         return [signal map:^id _Nullable(id  _Nullable value) {
             @strongify(self)
             for (NSDictionary *dict in value[@"books"]) {

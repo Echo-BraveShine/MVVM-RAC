@@ -35,7 +35,7 @@ static NSString *cellID = @"Cell";
     
     self.navigationItem.titleView = self.textField;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(loadData)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchItemClick)];
     
     [self.view addSubview:self.tableView];
     
@@ -45,13 +45,19 @@ static NSString *cellID = @"Cell";
         self.tableView.mj_footer.hidden = self.viewModel.dataSource.count == 0;
     }];
     
-    [self.textField.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
-        @strongify(self)
-        self.viewModel.param[@"q"] = x;
-    }];
-    
-
 }
+
+-(void)searchItemClick
+{
+    self.viewModel.param[@"q"] = self.textField.text;
+    
+    [self.viewModel.dataSource removeAllObjects];
+    
+    [self.tableView reloadData];
+    
+    [self loadData];
+}
+
 -(void)loadData
 {
     @weakify(self)
@@ -128,7 +134,10 @@ static NSString *cellID = @"Cell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = 100;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.tableFooterView = [UIView new];
         [_tableView registerNib:[UINib nibWithNibName:@"TableViewCell" bundle:nil] forCellReuseIdentifier:cellID];
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
