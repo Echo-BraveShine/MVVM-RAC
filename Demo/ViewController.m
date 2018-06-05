@@ -13,7 +13,7 @@
 #import "ReactiveObjc.h"
 #import "TableViewCell.h"
 #import "UIView+Placeholder.h"
-
+#import "UITableView+FDTemplateLayoutCell.h"
 static NSString *cellID = @"Cell";
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -39,16 +39,14 @@ static NSString *cellID = @"Cell";
     
     [self.view addSubview:self.tableView];
     
-    @weakify(self)
-    [[self.tableView rac_signalForSelector:@selector(reloadData)] subscribeNext:^(RACTuple * _Nullable x) {
-         @strongify(self)
-        self.tableView.mj_footer.hidden = self.viewModel.dataSource.count == 0;
-    }];
+   
     
 }
 
 -(void)searchItemClick
 {
+    [self.textField resignFirstResponder];
+    
     self.viewModel.param[@"q"] = self.textField.text;
     
     [self.viewModel.dataSource removeAllObjects];
@@ -111,6 +109,15 @@ static NSString *cellID = @"Cell";
     
     return cell;
 }
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return [tableView fd_heightForCellWithIdentifier:cellID configuration:^(TableViewCell * cell) {
+//        Model *model = self.viewModel.dataSource[indexPath.row];
+//        
+//        cell.model = model;
+//    }];
+//}
+
 
 
 
@@ -133,14 +140,16 @@ static NSString *cellID = @"Cell";
         _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.estimatedRowHeight = 100;
-        _tableView.estimatedSectionHeaderHeight = 0;
+       
+        _tableView.estimatedRowHeight = 200;
         _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.tableFooterView = [UIView new];
         [_tableView registerNib:[UINib nibWithNibName:@"TableViewCell" bundle:nil] forCellReuseIdentifier:cellID];
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+        _tableView.mj_footer.automaticallyHidden = YES;
     }
     return _tableView;
 }

@@ -21,6 +21,7 @@ PODS:
   - SDWebImage/Core (4.3.3)
   - ShinePlaceholderView (1.0.3):
     - MJRefresh
+  - "UITableView+FDTemplateLayoutCell (1.6)"
   - YTKNetwork (2.0.4):
     - AFNetworking (~> 3.0)
 
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - ReactiveObjC
   - SDWebImage
   - ShinePlaceholderView
+  - "UITableView+FDTemplateLayoutCell"
   - YTKNetwork
 
 SPEC REPOS:
@@ -38,6 +40,7 @@ SPEC REPOS:
     - ReactiveObjC
     - SDWebImage
     - ShinePlaceholderView
+    - "UITableView+FDTemplateLayoutCell"
     - YTKNetwork
 
 SPEC CHECKSUMS:
@@ -46,8 +49,9 @@ SPEC CHECKSUMS:
   ReactiveObjC: 2a38ea15335de4119d8b17caf1db1484f61db902
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   ShinePlaceholderView: f3c531f5c3052a8eb417e08adf282bb7587a1602
+  "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
   YTKNetwork: df8a7a5597bda1664a4efaa7ef871a818a887fe0
 
-PODFILE CHECKSUM: 51efd9dba9c512099a3dcfa9452fb02227873d81
+PODFILE CHECKSUM: b1693d49528e6f51da75229aafc2077943c569e8
 
 COCOAPODS: 1.5.2

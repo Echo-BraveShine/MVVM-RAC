@@ -6,5 +6,6 @@ target 'Demo' do
     pod 'AFNetworking'
     pod 'YTKNetwork'
     pod 'ReactiveObjC'
+    pod 'UITableView+FDTemplateLayoutCell'
 
 end

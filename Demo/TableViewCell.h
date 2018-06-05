@@ -20,6 +20,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *desc;
 
+@property (weak, nonatomic) IBOutlet UIButton *descBtn;
+
+
 @property (weak, nonatomic) IBOutlet UIButton *collectionBtn;
 
 @property (nonatomic,strong)Model *model;

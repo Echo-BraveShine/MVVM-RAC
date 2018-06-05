@@ -14,6 +14,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 
+    self.descBtn.titleLabel.numberOfLines = 0;
+//    self.desc.preferredMaxLayoutWidth = [UIScreen mainScreen].bounds.size.width-32;
 }
 
 -(void)setModel:(Model *)model
@@ -27,6 +29,8 @@
     self.subTitle.text = model.subtitle;
     
     self.desc.text = model.summary;
+    
+    [self.descBtn setTitle:model.summary forState:normal];
     
 }
 
